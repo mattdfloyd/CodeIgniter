@@ -15,26 +15,6 @@
 |
 */
 $config['base_url']	= '';
-if($config['base_url'] == '')
-{
-	if ($_SERVER['SERVER_PORT'] == '443' OR $_SERVER['SERVER_PORT'] == '80' OR $_SERVER['SERVER_PORT'] == '8080')
-	{
-		$_base_path = $_SERVER['SERVER_NAME'].str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
-		
-		if ($_SERVER['SERVER_PORT'] == '443')
-		{
-			$config['base_url'] = "https://".$_base_path;
-		}
-		else
-		{
-			$config['base_url'] = "http://".$_base_path;
-		}
-	}
-	else
-	{
-		$config['base_url'] = "http://".$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
-	}	
-}
 
 /*
 |--------------------------------------------------------------------------

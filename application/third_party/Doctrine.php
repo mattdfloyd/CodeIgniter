@@ -17,7 +17,14 @@ class Doctrine extends Doctrine_Core
 {
     public function __construct()
     {
-        require_once(realpath(dirname(__FILE__) . '/..') . DIRECTORY_SEPARATOR . 'config/database.php');
+        if ( ! defined('ENVIRONMENT') OR ! file_exists($file_path = APPPATH.'config/'.ENVIRONMENT.'/database.php'))
+        {
+            if ( ! file_exists($file_path = APPPATH.'config/database.php'))
+            {
+                show_error('The configuration file database.php does not exist.');
+            }
+        }
+        require_once($file_path);
         
         $db['default']['cachedir'] = ""; 
         $db['default']['dsn'] = 

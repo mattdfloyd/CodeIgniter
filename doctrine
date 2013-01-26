@@ -4,7 +4,7 @@
 	define('BASEPATH','.'); 
 
 	chdir(dirname(__FILE__));
-	require_once('libraries/Doctrine.php'); 
+	require_once('application/third_party/Doctrine.php'); 
 
 	$setup = new Doctrine();
 	$setup->setUpCommandLine();
