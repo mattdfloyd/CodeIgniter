@@ -15,7 +15,7 @@ class MY_Router extends CI_Router
      *
      * @var String
      */
-    private $_suffix = "Controller";
+    private $suffix = "_Controller";
 
     /*
      * Call the parent constructor
@@ -31,67 +31,16 @@ class MY_Router extends CI_Router
         parent::__construct();
     }
 
-    /**
-     * Validates the supplied segments.  Attempts to determine the path to
-     * the controller.
-     *
-     * @access   private
-     * @param   array
-     * @return   array
-     */
-    function _validate_request($segments)
-    {
-        // Retain the original segments
-        $orgSegments = array_slice($segments, 0);
+    function set_class($class) {
+        $this->class = $class . $this->suffix;
+    }
 
-        // Add suffix to the end
-        $segments[0] = ucfirst($segments[0]) . $this->_suffix;
-
-        // Does the requested controller exist in the root folder?
-        if (file_exists(APPPATH.'controllers/'.$segments[0].EXT)) {
-            return $segments;
+    function controller_name() {
+        if (strstr($this->class, $this->suffix)) {
+            return str_replace($this->suffix, '', $this->class);
         }
-
-        // OK, revert to the original segment
-        $segments[0] = $orgSegments[0];
-
-        // Is the controller in a sub-folder?
-        if (is_dir(APPPATH.'controllers/'.$segments[0])) {
-
-            // Set the directory and remove it from the segment array
-            $this->set_directory($segments[0]);
-            $segments = array_slice($segments, 1);
-
-            if (count($segments) > 0) {
-
-                // Add suffix to the end
-                $segments[0] = ucfirst($segments[0]) . $this->_suffix;
-
-                // Does the requested controller exist in the sub-folder?
-                if ( ! file_exists(APPPATH.'controllers/'.$this->fetch_directory().$segments[0].EXT)) {
-                    show_404($this->fetch_directory().$segments[0]);
-                }
-            } else {
-
-                // Add suffix to the end
-                $this->default_controller = ucfirst($this->default_controller) . $this->_suffix;
-
-                $this->set_class($this->default_controller);
-                $this->set_method('index');
-
-                // Does the default controller exist in the sub-folder?
-                if ( ! file_exists(APPPATH.'controllers/'.$this->fetch_directory().$this->default_controller.EXT)) {
-
-                    $this->directory = '';
-                    return array();
-                }
-
-            }
-
-            return $segments;
+        else {
+            return $this->class;
         }
-
-        // Can't find the requested controller...
-        show_404($segments[0]);
     }
 }

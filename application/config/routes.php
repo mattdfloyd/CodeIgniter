@@ -41,6 +41,23 @@
 $route['default_controller'] = "welcome";
 $route['404_override'] = '';
 
+$route['login'] = 'sessions/login';
+$route['logout'] = 'sessions/logout';
+
+$route['admin'] = 'admin/main';
+$route['admin/search'] = 'admin/main/search';
+
+$route['(:any)/search/(:any)'] = "$1/search/$2";
+$route['(:any)/page/(:num)'] = "$1/index/$2";
+$route['(:any)/page'] = "$1/index/0";
+
+$route['(:any)/(:num)/(:any)/&(:any)'] = "$1/$3/$2/$4";
+$route['(:any)/(:num)/(:any)/(:num)/(:any)'] = "$1/$3/$5/$2/$4";
+$route['(:any)/(:num)/(:any)/(:num)'] = "$1/$3/show/$2/$4";
+
+$route['(:any)/(:num)'] = "$1/show/$2";
+$route['(:any)/(:num)/(:any)'] = "$1/$3/$2";
+
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

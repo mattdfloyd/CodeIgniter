@@ -1,10 +1,21 @@
 #!/usr/bin/env php
 <?php
 
-	define('BASEPATH','.'); 
+	define('BASEPATH', 'system/');
+	define('APPPATH', 'application/');
+
+	switch (isset($_SERVER['ENVIRONMENT']) && $_SERVER['ENVIRONMENT']) {
+		case '127.0.0.1':
+			define('ENVIRONMENT', 'development');
+		break;
+		
+		default:
+			define('ENVIRONMENT', 'production');
+		break;
+	}
 
 	chdir(dirname(__FILE__));
-	require_once('application/third_party/Doctrine.php'); 
+	require_once('application/third_party/doctrine/Doctrine.php'); 
 
 	$setup = new Doctrine();
 	$setup->setUpCommandLine();
